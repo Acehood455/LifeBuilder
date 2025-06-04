@@ -1,8 +1,6 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
-  url      = "postgres://LifeBuilder_owner:npg_c7XPRxjVr2Ci@ep-wispy-wind-ab7bksnq-pooler.eu-west-2.aws.neon.tech/LifeBuilder?sslmode=require&connection_limit=1&pgbouncer=true"
-  // engineType = "binary"
 }
 
 datasource db {
