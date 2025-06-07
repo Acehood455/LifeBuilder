@@ -2,11 +2,12 @@
 
 import {
   deleteClass,
-  deleteExam,
+  // deleteExam,
   deleteParent,
   deleteStudent,
   deleteSubject,
   deleteTeacher,
+  deleteAssessment,
 } from "@/lib/actions";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -21,10 +22,11 @@ const deleteActionMap = {
   class: deleteClass,
   teacher: deleteTeacher,
   student: deleteStudent,
-  exam: deleteExam,
+  // exam: deleteExam,
   parent: deleteParent,
   lesson: deleteSubject,
-  assignment: deleteSubject,
+  // assignment: deleteSubject,
+  assessment: deleteAssessment,
   result: deleteSubject,
   attendance: deleteSubject,
   event: deleteSubject,
@@ -44,9 +46,9 @@ const SubjectForm = dynamic(() => import("./forms/SubjectForm"), {
 const ClassForm = dynamic(() => import("./forms/ClassForm"), {
   loading: () => <h1>Loading...</h1>,
 });
-const ExamForm = dynamic(() => import("./forms/ExamForm"), {
-  loading: () => <h1>Loading...</h1>,
-});
+// const ExamForm = dynamic(() => import("./forms/ExamForm"), {
+//   loading: () => <h1>Loading...</h1>,
+// });
 const ParentForm = dynamic(() => import("./forms/ParentForm"), {
   loading: () => <h1>Loading...</h1>,
 });
@@ -95,15 +97,16 @@ const forms: {
       relatedData={relatedData}
     />
   ),
-  exam: (setOpen, type, data, relatedData) => (
-    <ExamForm
-      type={type}
-      data={data}
-      setOpen={setOpen}
-      relatedData={relatedData}
-    />
-    // TODO OTHER LIST ITEMS
-  ),
+  // exam: (setOpen, type, data, relatedData) => (
+  //   <ExamForm
+  //     type={type}
+  //     data={data}
+  //     setOpen={setOpen}
+  //     relatedData={relatedData}
+  //   />
+
+  // TODO OTHER LIST ITEMS
+ 
   parent: (setOpen, type, data, relatedData) => (
     <ParentForm
       type={type}
@@ -127,8 +130,8 @@ const FormModal = ({
     type === "create"
       ? "bg-Yellow"
       : type === "update"
-      ? "bg-Sky"
-      : "bg-Purple";
+      ? "bg-blue-500"
+      : "bg-Purple hover:bg-blue-500";
 
   const [open, setOpen] = useState(false);
 
@@ -150,7 +153,7 @@ const FormModal = ({
 
     return type === "delete" && id ? (
       <form action={formAction} className="p-4 flex flex-col gap-4">
-        <input type="text | number" name="id" value={id} hidden />
+        <input type="hidden" name="id" value={id} />
         <span className="text-center font-medium">
           All data will be lost. Are you sure you want to delete this {table}?
         </span>

@@ -10,12 +10,13 @@ export type FormContainerProps = {
     | "subject"
     | "class"
     | "lesson"
-    | "exam"
-    | "assignment"
+    // | "exam"
+    // | "assignment"
     | "result"
     | "attendance"
     | "event"
-    | "announcement";
+    | "announcement"
+    | "assessment";
   type: "create" | "update" | "delete";
   data?: any;
   id?: number | string;
@@ -64,16 +65,16 @@ const FormContainer = async ({ table, type, data, id }: FormContainerProps) => {
         relatedData = { classes: studentClasses, grades: studentGrades };
         break;
         
-      case "exam":
-        const examLessons = await prisma.lesson.findMany({
-          where: {
-            ...(role === "teacher" ? { teacherId: currentUserId! } : {}),
-          },
-          select: { id: true, name: true },
-        });
+      // case "exam":
+      //   const examLessons = await prisma.lesson.findMany({
+      //     where: {
+      //       ...(role === "teacher" ? { teacherId: currentUserId! } : {}),
+      //     },
+      //     select: { id: true, name: true },
+      //   });
 
-        relatedData = { lessons: examLessons };
-        break;
+        // relatedData = { lessons: examLessons };
+        // break;
 
       case "parent":
         const parentsChildren = await prisma.student.findMany({

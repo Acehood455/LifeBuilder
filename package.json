@@ -2,6 +2,7 @@
   "name": "cms-next-dashboard",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "postinstall": "prisma generate",
@@ -43,6 +44,6 @@
     "typescript": "^5.8.3"
   },
   "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node --esm --project tsconfig.node.json prisma/seed.ts"
   }
 }
