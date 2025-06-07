@@ -93,6 +93,16 @@ const AssessmentForm = ({ type, setOpen, relatedData }: Props) => {
         <input name="startTime" type="datetime-local" required className="form-input" />
       </label>
 
+      <label>
+        End Time:
+        <input name="endTime" type="datetime-local" required className="form-input" />
+      </label>
+
+      <label>
+        Max Score:
+        <input name="maxScore" type="number" required className="form-input" />
+      </label>
+
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md">
         Create
       </button>
