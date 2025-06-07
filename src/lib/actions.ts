@@ -3,7 +3,7 @@
 import { AssessmentType } from "../../generated/prisma";
 import {
   ClassSchema,
-  ExamSchema,
+  // ExamSchema,
   ParentSchema,
   StudentSchema,
   SubjectSchema,
