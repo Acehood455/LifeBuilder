@@ -1,5 +1,6 @@
 "use server";
 
+import { AssessmentType } from "../../generated/prisma";
 import {
   ClassSchema,
   ExamSchema,
@@ -583,6 +584,42 @@ export const deleteParent = async (
     return { success: false, error: true };
   }
 };
+
+
+
+
+// ASSESSMENTS CRUD OPERATIONS
+export const createAssessment = async (_: any, data: FormData) => {
+  try {
+    const title = data.get("title") as string;
+    const type = data.get("type") as AssessmentType; 
+    const weight = Number(data.get("weight"));
+    const subjectId = Number(data.get("subjectId"));
+    const classId = Number(data.get("classId"));
+    const termId = Number(data.get("termId"));
+    const startTime = new Date(data.get("startTime") as string);
+
+    await prisma.assessment.create({
+      data: {
+        title,
+        type,
+        weight,
+        subjectId,
+        classId,
+        termId,
+        startTime,
+        endTime: new Date(data.get("endTime") as string), 
+        maxScore: Number(data.get("maxScore")),   
+      },
+    });
+
+    return { success: true, error: false };
+  } catch (err) {
+    console.error(err);
+    return { success: false, error: true };
+  }
+};
+
 
 export const deleteAssessment = async (
   currentState: CurrentState,

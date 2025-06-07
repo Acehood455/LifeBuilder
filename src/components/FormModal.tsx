@@ -53,6 +53,9 @@ const ParentForm = dynamic(() => import("./forms/ParentForm"), {
   loading: () => <h1>Loading...</h1>,
 });
 // TODO: OTHER FORMS
+const AssessmentForm = dynamic(() => import("./forms/AssessmentForm"), {
+  loading: () => <h1>Loading...</h1>,
+});
 
 const forms: {
   [key: string]: (
@@ -105,8 +108,6 @@ const forms: {
   //     relatedData={relatedData}
   //   />
 
-  // TODO OTHER LIST ITEMS
- 
   parent: (setOpen, type, data, relatedData) => (
     <ParentForm
       type={type}
@@ -115,6 +116,15 @@ const forms: {
       relatedData={relatedData}
     />
     // TODO OTHER LIST ITEMS
+  ),
+
+  assessment: (setOpen, type, data, relatedData) => (
+  <AssessmentForm
+    type={type}
+    setOpen={setOpen}
+    data={data}
+    relatedData={relatedData}
+  />
   ),
 };
 

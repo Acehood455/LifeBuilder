@@ -63,7 +63,7 @@ const AssessmentListPage = async ({ searchParams }: { searchParams: { [key: stri
       <div className="flex justify-between items-center mb-2">
         <h1 className="text-lg font-semibold">Assessments</h1>
         {(role === "admin" || role === "teacher") && (
-          <FormModal table="assessment" type="create" />
+          <FormModal table="assessment" type="create" relatedData={{ subjects, terms, classes }}/>
         )}
       </div>
 
