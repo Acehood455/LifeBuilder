@@ -112,3 +112,21 @@ export const parentSchema = z.object({
   });
 
 export type ParentSchema = z.infer<typeof parentSchema>;
+
+
+export const assessmentSchema = z.object({
+  id: z.coerce.number().optional(),
+  title: z.string().min(1, { message: "Title is required!" }),
+  type: z.enum(["FIRST_CA", "SECOND_CA", "EXAM"], {
+    message: "Assessment type is required!",
+  }),
+  weight: z.coerce.number().min(0, { message: "Weight is required!" }),
+  maxScore: z.coerce.number().min(1, { message: "Max score must be at least 1!" }),
+  startTime: z.coerce.date({ message: "Start time is required!" }),
+  endTime: z.coerce.date({ message: "End time is required!" }),
+  subjectId: z.coerce.number().min(1, { message: "Subject is required!" }),
+  classId: z.coerce.number().min(1, { message: "Class is required!" }),
+  termId: z.coerce.number().min(1, { message: "Term is required!" }),
+});
+
+export type AssessmentSchema = z.infer<typeof assessmentSchema>;

@@ -1,6 +1,5 @@
 "use server";
 
-import { AssessmentType } from "../../generated/prisma";
 import {
   ClassSchema,
   // ExamSchema,
@@ -8,6 +7,7 @@ import {
   StudentSchema,
   SubjectSchema,
   TeacherSchema,
+  AssessmentSchema,
 } from "./formValidationSchemas";
 import prisma from "./prisma";
 import { auth, clerkClient } from "@clerk/nextjs/server";
@@ -589,27 +589,22 @@ export const deleteParent = async (
 
 
 // ASSESSMENTS CRUD OPERATIONS
-export const createAssessment = async (_: any, data: FormData) => {
+export const createAssessment = async (
+  _: CurrentState,
+  data: AssessmentSchema
+) => {
   try {
-    const title = data.get("title") as string;
-    const type = data.get("type") as AssessmentType; 
-    const weight = Number(data.get("weight"));
-    const subjectId = Number(data.get("subjectId"));
-    const classId = Number(data.get("classId"));
-    const termId = Number(data.get("termId"));
-    const startTime = new Date(data.get("startTime") as string);
-
     await prisma.assessment.create({
       data: {
-        title,
-        type,
-        weight,
-        subjectId,
-        classId,
-        termId,
-        startTime,
-        endTime: new Date(data.get("endTime") as string), 
-        maxScore: Number(data.get("maxScore")),   
+        title: data.title,
+        type: data.type,
+        weight: data.weight,
+        subjectId: data.subjectId,
+        classId: data.classId,
+        termId: data.termId,
+        startTime: data.startTime,
+        endTime: data.endTime,
+        maxScore: data.maxScore,
       },
     });
 
@@ -620,9 +615,35 @@ export const createAssessment = async (_: any, data: FormData) => {
   }
 };
 
+export const updateAssessment = async (
+  _: CurrentState,
+  data: AssessmentSchema
+) => {
+  try {
+    await prisma.assessment.update({
+      where: { id: data.id },
+      data: {
+        title: data.title,
+        type: data.type,
+        weight: data.weight,
+        subjectId: data.subjectId,
+        classId: data.classId,
+        termId: data.termId,
+        startTime: data.startTime,
+        endTime: data.endTime,
+        maxScore: data.maxScore,
+      },
+    });
+
+    return { success: true, error: false };
+  } catch (err) {
+    console.error(err);
+    return { success: false, error: true };
+  }
+};
 
 export const deleteAssessment = async (
-  currentState: CurrentState,
+  _: CurrentState,
   data: FormData
 ) => {
   const idStr = data.get("id");
@@ -635,7 +656,6 @@ export const deleteAssessment = async (
 
   try {
     await prisma.assessment.delete({ where: { id } });
-    // revalidatePath("/list/assessments");
     return { success: true, error: false };
   } catch (err) {
     console.error(err);

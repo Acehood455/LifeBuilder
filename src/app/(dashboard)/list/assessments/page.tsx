@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 import { Prisma } from "../../../../../generated/prisma";
 import SelectDropdown from "@/components/SelectDropdown";
-import FormModal from "@/components/FormModal";
+import FormContainer from "@/components/FormContainer";
 import ViewScoresModal from "@/components/ViewScoresModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
@@ -63,7 +63,7 @@ const AssessmentListPage = async ({ searchParams }: { searchParams: { [key: stri
       <div className="flex justify-between items-center mb-2">
         <h1 className="text-lg font-semibold">Assessments</h1>
         {(role === "admin" || role === "teacher") && (
-          <FormModal table="assessment" type="create" relatedData={{ subjects, terms, classes }}/>
+          <FormContainer table="assessment" type="create"/>
         )}
       </div>
 
@@ -81,7 +81,7 @@ const AssessmentListPage = async ({ searchParams }: { searchParams: { [key: stri
                 {(role === "admin" || role === "teacher") && (
                   <>
                     <ViewScoresModal assessmentId={item.id} />
-                    <FormModal table="assessment" type="delete" id={item.id} />
+                    <FormContainer table="assessment" type="delete" id={item.id} />
                   </>
                 )}
               </div>
