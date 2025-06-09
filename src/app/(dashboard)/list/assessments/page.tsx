@@ -47,8 +47,10 @@ const AssessmentListPage = async ({ searchParams }: { searchParams: { [key: stri
 
   const columns = [
     { header: "Title", accessor: "title" },
+    { header: "Class", accessor: "class" },
+    { header: "Subject", accessor: "subject" },
     { header: "Type", accessor: "type" },
-    { header: "Weight", accessor: "weight" },
+    { header: "Percent", accessor: "weight" },
     { header: "Actions", accessor: "actions" },
   ];
 
@@ -73,6 +75,8 @@ const AssessmentListPage = async ({ searchParams }: { searchParams: { [key: stri
         render={(item) => (
           <tr key={item.id} className="border-b text-sm even:bg-slate-50 hover:bg-slate-100">
             <td>{item.title}</td>
+            <td>{item.class.name}</td>
+            <td>{item.subject.name}</td>
             <td>{item.type}</td>
             <td>{item.weight}%</td>
             <td>
@@ -80,7 +84,7 @@ const AssessmentListPage = async ({ searchParams }: { searchParams: { [key: stri
                 
                 {(role === "admin" || role === "teacher") && (
                   <>
-                    <ViewScoresModal assessmentId={item.id} />
+                    <ViewScoresModal assessmentId={item.id} teacherId={userId? userId : ""} />
                     <FormContainer table="assessment" type="delete" id={item.id} />
                   </>
                 )}

@@ -1,6 +1,7 @@
 
 // components/Modal.tsx
 "use client";
+import Image from "next/image";
 import { FC, ReactNode } from "react";
 
 const Modal: FC<{
@@ -16,7 +17,7 @@ const Modal: FC<{
       <div className="bg-white rounded-md p-6 w-full max-w-3xl shadow-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">{title}</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-800">×</button>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-800"><Image src="/close.png" alt="" width={14} height={14} /></button>
         </div>
         {children}
       </div>

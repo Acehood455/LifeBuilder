@@ -77,7 +77,7 @@ const AssessmentForm = ({ type, data, setOpen, relatedData }: Props) => {
           error={errors?.title}
         />
 
-        {data && (
+        {type === "update" && data?.id && (
           <InputField
             label="Id"
             name="id"

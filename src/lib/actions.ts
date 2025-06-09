@@ -594,19 +594,41 @@ export const createAssessment = async (
   data: AssessmentSchema
 ) => {
   try {
-    await prisma.assessment.create({
+    const { id, ...rest } = data;
+
+    console.log("Creating assessment with:", rest);
+
+    // Step 1: Create the assessment
+    const assessment = await prisma.assessment.create({
       data: {
-        title: data.title,
-        type: data.type,
-        weight: data.weight,
-        subjectId: data.subjectId,
-        classId: data.classId,
-        termId: data.termId,
-        startTime: data.startTime,
-        endTime: data.endTime,
-        maxScore: data.maxScore,
+        title: rest.title,
+        type: rest.type,
+        weight: rest.weight,
+        subjectId: rest.subjectId,
+        classId: rest.classId,
+        termId: rest.termId,
+        startTime: rest.startTime,
+        endTime: rest.endTime,
+        maxScore: rest.maxScore,
       },
     });
+
+    // Step 2: Get students in the class
+    const students = await prisma.student.findMany({
+      where: { classId: rest.classId },
+      select: { id: true },
+    });
+
+    // Step 3: Create AssessmentResult entries for each student
+    if (students.length > 0) {
+      await prisma.assessmentResult.createMany({
+        data: students.map((student) => ({
+          studentId: student.id,
+          assessmentId: assessment.id,
+          score: 0, // default
+        })),
+      });
+    }
 
     return { success: true, error: false };
   } catch (err) {
@@ -614,6 +636,8 @@ export const createAssessment = async (
     return { success: false, error: true };
   }
 };
+
+
 
 export const updateAssessment = async (
   _: CurrentState,

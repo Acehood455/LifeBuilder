@@ -8,19 +8,31 @@ const matchers = Object.keys(routeAccessMap).map(route => ({
 }))
 
 export default clerkMiddleware(async (auth, req) => {
-  // if (isProtectedRoute(req)) await auth.protect()
+  const { sessionClaims } = await auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
 
-  const {sessionClaims} = await auth();
+  for (const { matcher, allowedRoles } of matchers) {
+    if (matcher(req)) {
+      // If no session or no role, redirect to sign-in (or send 401 if API)
+      if (!role) {
+        if (req.nextUrl.pathname.startsWith('/api')) {
+          return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' },
+          });
+        }
 
-  // console.log(sessionClaims);
-  const role = (sessionClaims?.metadata as {role?: string})?.role;
+        return NextResponse.redirect(new URL('/sign-in', req.url));
+      }
 
-  for (const {matcher, allowedRoles} of matchers) {
-    if (matcher(req) && !allowedRoles.includes(role!)) {
-      return NextResponse.redirect(new URL(`/${role}`, req.url));
+      // Role exists but not allowed
+      if (!allowedRoles.includes(role)) {
+        return NextResponse.redirect(new URL(`/${role}`, req.url));
+      }
     }
   }
-})
+});
+
 
 export const config = {
   matcher: [
@@ -28,5 +40,8 @@ export const config = {
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
     // Always run for API routes
     '/(api|trpc)(.*)',
+    // Skip Clerk for /api/assessments/:id/results
+    '/api/:path((?!assessments/\\d+/results).*)',
+
   ],
 };
