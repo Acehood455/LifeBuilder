@@ -131,6 +131,13 @@ const StudentForm = ({
           error={errors.surname}
         />
         <InputField
+          label="Admission Number"
+          name="admissionNumber"
+          defaultValue={data?.admissionNumber}
+          register={register}
+          error={errors.admissionNumber}
+        />
+        <InputField
           label="Phone"
           name="phone"
           defaultValue={data?.phone}

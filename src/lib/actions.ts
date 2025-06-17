@@ -297,6 +297,7 @@ export const createStudent = async (
         gradeId: data.gradeId,
         classId: data.classId,
         parentId: data.parentId,
+        admissionNumber: data.admissionNumber,
       },
     });
 
@@ -336,6 +337,7 @@ export const updateStudent = async (
         address: data.address,
         img: data.img || null,
         bloodType: data.bloodType,
+        admissionNumber: data.admissionNumber || null,
         sex: data.sex,
         birthday: data.birthday,
         gradeId: data.gradeId,
@@ -666,10 +668,7 @@ export const updateAssessment = async (
   }
 };
 
-export const deleteAssessment = async (
-  _: CurrentState,
-  data: FormData
-) => {
+export const deleteAssessment = async (_: CurrentState, data: FormData) => {
   const idStr = data.get("id");
   const id = Number(idStr);
 
@@ -679,10 +678,20 @@ export const deleteAssessment = async (
   }
 
   try {
-    await prisma.assessment.delete({ where: { id } });
+    // Delete related assessmentResults first to avoid foreign key constraint violations
+    await prisma.assessmentResult.deleteMany({
+      where: { assessmentId: id },
+    });
+
+    // Now delete the assessment itself
+    await prisma.assessment.delete({
+      where: { id },
+    });
+
     return { success: true, error: false };
   } catch (err) {
-    console.error(err);
+    console.error("Error deleting assessment:", err);
     return { success: false, error: true };
   }
 };
+

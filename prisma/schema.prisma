@@ -26,6 +26,7 @@ model Student {
   sex             UseSex
   birthday        DateTime
   createdAt       DateTime            @default(now())
+  admissionNumber String?              @unique
 
   parentId        String
   parent          Parent              @relation(fields: [parentId], references: [id])

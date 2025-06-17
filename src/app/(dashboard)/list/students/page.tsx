@@ -69,8 +69,8 @@ const StudentListPage = async ({searchParams}: {searchParams: {[key:string]: str
             accessor:'info',
         },
         {
-            header: 'Student ID', 
-            accessor:'studentId', 
+            header: 'Admission Number', 
+            accessor:'admissionNumber', 
             className: 'hidden md:table-cell',
         },
         {
@@ -108,7 +108,7 @@ const StudentListPage = async ({searchParams}: {searchParams: {[key:string]: str
                 </div>
             </td>
     
-            <td className="hidden md:table-cell">{item.username}</td>
+            <td className="hidden md:table-cell">{item.admissionNumber}</td>
             <td className="hidden md:table-cell">{item.grade.level}</td>
             <td className="hidden md:table-cell">{item.phone}</td>
             <td className="hidden md:table-cell">{item.address}</td>

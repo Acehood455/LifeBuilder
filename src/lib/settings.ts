@@ -22,4 +22,13 @@ export const routeAccessMap : RouteAccessMap = {
     '/list/events' : ['admin', 'teacher', 'student', 'parent'],
     '/list/announcements' : ['admin', 'teacher', 'student', 'parent'],
     "/api/assessments/:assessmentId/results" : ['admin', 'teacher'],
+    "/list/results/:studentId" : ['admin', 'teacher', 'student', 'parent']
 }
+
+export const appConfig = {
+  currentYear: "2024/2025",
+  currentTerm: "Third Term", // First Term | Second Term | Third Term
+  currentTermId : 3, // 1 | 2 | 3
+  showFullYearResults: true, // true | false
+  newTermBegins: "2024-08-01",
+};
