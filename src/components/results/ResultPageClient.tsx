@@ -14,34 +14,34 @@ export default function ResultPageClient({ resultData }: { resultData: any }) {
   const printRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handlePrint = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      window.print();
-      setIsLoading(false);
-    }, 100);
-  };
+  // const handlePrint = () => {
+  //   setIsLoading(true);
+  //   setTimeout(() => {
+  //     window.print();
+  //     setIsLoading(false);
+  //   }, 100);
+  // };
 
-  const handleDownloadPDF = async () => {
-    setIsLoading(true);
-    try {
-      const element = printRef.current;
-      if (!element) return;
+  // const handleDownloadPDF = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     const element = printRef.current;
+  //     if (!element) return;
 
-      const canvas = await html2canvas(element);
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgData = canvas.toDataURL('image/png');
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+  //     const canvas = await html2canvas(element);
+  //     const pdf = new jsPDF('p', 'mm', 'a4');
+  //     const imgData = canvas.toDataURL('image/png');
+  //     const pdfWidth = pdf.internal.pageSize.getWidth();
+  //     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
       
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save('student-result.pdf');
-    } catch (error) {
-      console.error("PDF generation failed:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+  //     pdf.save('student-result.pdf');
+  //   } catch (error) {
+  //     console.error("PDF generation failed:", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   if (isLoading) {
     return (
@@ -55,22 +55,22 @@ export default function ResultPageClient({ resultData }: { resultData: any }) {
     <div className="max-w-4xl mx-auto p-6 bg-white shadow rounded mt-20">
       <div className="flex justify-end gap-4 mb-4 print:hidden">
         <button
-          onClick={handlePrint}
-          disabled={isLoading}
+          onClick={() => window.print()}
+          // disabled={isLoading}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
         >
-          Print Result
+          Print / Download
         </button>
-        <button
+        {/* <button
           onClick={handleDownloadPDF}
           disabled={isLoading}
           className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
         >
-          Download PDF
-        </button>
+          Download
+        </button> */}
       </div>
       
-      <div ref={printRef}>
+      <div id="print-area" ref={printRef} className="print:block">
         <ResultHeader 
           school={{
             name: "LIFEBUILDER CHRISTIAN HIGH SCHOOL",
@@ -103,7 +103,7 @@ export default function ResultPageClient({ resultData }: { resultData: any }) {
         <ResultsTable scores={resultData.scores} isThirdTerm={resultData.term?.toLowerCase().includes("third")} />
         <div className="ml-2">
           <h2 className="text-xs font-semibold uppercase">Total number of subjects offered: {resultData.subjectCount}</h2>
-          <h2 className="text-xs font-semibold uppercase">Total Score: {resultData.scores.reduce((sum, row) => sum + (row.total || 0), 0)}</h2>
+          <h2 className="text-xs font-semibold uppercase">Total Score: {resultData.scores.reduce((sum: number, row: { total?: number }) => sum + (row.total || 0), 0)}</h2>
         </div>
         <ResultLegend />
         <SignatureFooter />

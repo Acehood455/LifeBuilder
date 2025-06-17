@@ -18,7 +18,7 @@ export default function SelectDropdown({ label, param, options }: Props) {
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams ?? "");
     if (e.target.value) {
       params.set(param, e.target.value);
     } else {
@@ -30,7 +30,7 @@ export default function SelectDropdown({ label, param, options }: Props) {
   return (
     <label className="text-sm">
       {label}:{' '}
-      <select onChange={handleChange} defaultValue={searchParams.get(param) || ''} className="border p-1 rounded-md">
+      <select onChange={handleChange} defaultValue={searchParams?.get(param) || ''} className="border p-1 rounded-md">
         <option value="">All</option>
         {options.map((opt) => (
           <option key={opt.id} value={opt.id}>

@@ -24,6 +24,12 @@ const config: Config = {
       }
     },
   },
+  variants: {
+    extend: {
+      display: ['print'],
+      visibility: ['print'],
+    },
+  },
   plugins: [],
 };
 export default config;

@@ -238,7 +238,7 @@ const StudentResultPage = async ({ params }: Props) => {
     classmates,
     scores,
     showFullYearResults,
-    currentTermId
+    currentTermId.toString()
   );
 
 

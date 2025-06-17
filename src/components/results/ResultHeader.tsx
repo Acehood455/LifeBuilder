@@ -8,13 +8,13 @@ interface Props {
     email: string;
     logoUrl?: string;
   };
-  student: {
-    name: string;
-    surnName: string;
-    className: string;
-    term: string;
-    session: string;
-  };
+  // student: {
+  //   name: string;
+  //   surnName: string;
+  //   className: string;
+  //   term: string;
+  //   session: string;
+  // };
 }
 
 const ResultHeader = ({ school }: Props) => {

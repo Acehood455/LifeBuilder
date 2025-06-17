@@ -21,7 +21,7 @@ export default function ResultsRow({ row, isThirdTerm }: { row: any; isThirdTerm
       )}
 
       <td className="border-2 border-black px-2 py-1 text-center">{isThirdTerm ? row.average : row.total}</td>
-      {console.log("ResultsRow Data:", row.average, row.total)}
+      {/* {console.log("ResultsRow Data:", row.average, row.total)} */}
       <td className="border-2 border-black px-2 py-1 text-center">{row.grade}</td>
       <td className="border-2 border-black px-2 py-1 text-center">{row.position}</td>
       <td className="border-2 border-black px-2 py-1 text-center">{row.classAverage}</td>

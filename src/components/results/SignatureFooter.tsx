@@ -4,10 +4,10 @@ export default function SignatureFooter() {
     <div className="w-full">
       <div className="w-full overflow-hidden">
         <h6 className="mb-0 mt-5 ml-[15px] font-bold whitespace-nowrap overflow-hidden">
-          Form Teacher's Comment _____________________________________________________________________________________________________________________________________.
+          Form Teacher&apos;s Comment _____________________________________________________________________________________________________________________________________.
         </h6>
         <h6 className="mb-0 mt-0 ml-[15px] font-bold whitespace-nowrap overflow-hidden">
-          Principal's Comment ________________________________________________________________________________________________________________________________________.
+          Principal&apos;s Comment ________________________________________________________________________________________________________________________________________.
         </h6>
       </div>
       <div className="flex justify-between mt-8 pt-4 ">

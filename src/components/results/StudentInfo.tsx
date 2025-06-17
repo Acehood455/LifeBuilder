@@ -7,18 +7,19 @@ interface StudentInfoProps {
     id: string;
     className: string;
     term: string;
-    state: string;
-    lga: string;
+    // state: string;
+    // lga: string;
     gender: string;
     session: string;
-    feesPaid: number;
-    feesOwed: number;
+    // feesPaid: number;
+    // feesOwed: number;
     age: number;
     noInClass: number;
     classTeacher: string;
     newTermBegins: string;
     average: number;
     position: string;
+    admissionNumber: string;
   };
 }
 
@@ -32,7 +33,7 @@ const StudentInfo: React.FC<{ student: StudentInfoProps["student"] }> = ({ stude
       <table className="w-full border-collapse text-sm">
         <tbody>
           <tr className="font-semibold border-b border-black">
-            <td className="bg-[#d9d9d9] font-semibold border-2 border-black p-1">Student's Name</td>
+            <td className="bg-[#d9d9d9] font-semibold border-2 border-black p-1">Student&apos;s Name</td>
             <td className="font-semibold border-2 border-black p-1">{student.name} {student.surnName}</td>
             <td className="bg-[#d9d9d9] font-semibold border-2 border-black p-1">Admin No.</td>
             <td className="font-semibold border-2 border-black p-1">{student.admissionNumber}</td>
