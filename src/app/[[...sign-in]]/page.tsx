@@ -31,8 +31,8 @@ const LoginPage = () => {
     <SignIn.Root>
       <SignIn.Step name='start' className='bg-white p-12 rounded-md shadow-2xl flex flex-col gap-2'>
         <h1 className='text-xl font-bold flex items-center gap-2'>
-          <Image src='/logo.png' alt='' width={24} height={24} />
-          School Name
+          <Image src='/lifebuilderLogo.png' alt='' width={240} height={240} />
+          {/* LIFEBUILDER HIGH SCHOOL */}
         </h1>
         <h2 className='text-gray-400'>
           Sign in to your account
