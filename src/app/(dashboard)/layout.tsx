@@ -23,7 +23,6 @@ export default function DashboardLayout({
           w-64 transform transition-transform duration-300
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
           md:relative md:translate-x-0 md:w-[16%] xl:w-[14%]
-          
         `}
       >
         {/* Close Button for Mobile */}
@@ -69,7 +68,7 @@ export default function DashboardLayout({
       {/* Main Content */}
       <div className="flex-1 bg-[#f7f8fa] overflow-y-auto ">
         {/* Mobile Top Bar */}
-        <div className="md:hidden flex items-center justify-between p-4 bg-white shadow-md w-[100%] fixed z-30">
+        <div className="md:hidden flex items-center justify-between p-3 bg-white shadow-md w-[100%] fixed z-30">
           <button onClick={() => setSidebarOpen(true)}>
             <MenuIcon className="w-6 h-6" />
           </button>

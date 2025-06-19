@@ -78,7 +78,7 @@ const Navbar = ({ className = "" }: NavbarProps) => {
   return (
     <div
       className={clsx(
-        "flex items-center justify-between p-4 bg-white",
+        "flex items-center justify-between md:p-4 bg-white",
         // Only apply fixed width styles on desktop
         "md:fixed md:z-50 md:w-[86%] md:bg-white",
         className
