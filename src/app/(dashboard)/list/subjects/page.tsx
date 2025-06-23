@@ -95,18 +95,18 @@ const renderRow = (item:SubjectList) =>(
     <div className="mt-20 bg-white p-4 rounded-md flex-1 m-4">
       {/* Top */}
       <div className="flex items-center justify-between">
-        <h1 className="hidden md:block text-lg font-semibold">Subjects</h1>
+        <h1 className="block text-lg font-semibold">Subjects</h1>
 
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
             <TableSearch />
 
             <div className="flex items-center gap-4 self-end">
-                <button className="w-8 h-8 flex items-center justify-center rounded-full bg-Yellow">
+                {/* <button className="w-8 h-8 flex items-center justify-center rounded-full bg-Yellow">
                     <Image src='/filter.png' alt='' width={14} height={14} />
                 </button>
                 <button className="w-8 h-8 flex items-center justify-center rounded-full bg-Yellow">
                     <Image src='/sort.png' alt='' width={14} height={14} />
-                </button>
+                </button> */}
                 {role === 'admin' && ( 
                     <button className="w-8 h-8 flex items-center justify-center rounded-full bg-Yellow">
                         <FormContainer table="subject" type="create" />

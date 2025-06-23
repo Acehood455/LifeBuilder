@@ -8,12 +8,14 @@ import Link from "next/link";
 import { Class, Grade, Prisma, Student } from "../../../../../generated/prisma";
 import prisma from "@/lib/prisma";
 import { getUserRole } from "@/lib/utils";
+import SelectDropdown from "@/components/SelectDropdown";
 
 type StudentList = Student & {class: Class, grade: Grade}
 
 
 const StudentListPage = async ({searchParams}: {searchParams: {[key:string]: string | undefined} }) => {
     const { role } = await getUserRole();
+    const classes = await prisma.class.findMany();
 
     const {page, ...queryParams} = searchParams;
     const p = page ? parseInt(page) : 1;
@@ -39,6 +41,9 @@ const StudentListPage = async ({searchParams}: {searchParams: {[key:string]: str
                             { name: { contains: value, mode: 'insensitive' } },
                             { surnName: { contains: value, mode: 'insensitive' } },
                           ];
+                        break;
+                    case 'classId':
+                        query.classId = parseInt(value);
                         break;
                     default:
                         break;
@@ -115,11 +120,13 @@ const StudentListPage = async ({searchParams}: {searchParams: {[key:string]: str
     
             <td className="">
                 <div className="flex items-center gap-2">
-                    <Link href={`/list/students/${item.id}`}>
-                        <button className="w-7 h-7 flex items-center justify-center rounded-full bg-Sky">
-                            <Image src='/view.png' alt='' width={16} height={16} />
-                        </button>
-                    </Link>
+                    {(role === 'admin' || role === 'teacher') && ( 
+                        <Link href={`/list/students/${item.id}`}>
+                            <button className="w-7 h-7 flex items-center justify-center rounded-full bg-Sky">
+                                <Image src='/view.png' alt='' width={16} height={16} />
+                            </button>
+                        </Link>
+                    )}
     
                     {role === 'admin' && ( 
                         <FormContainer table="student" type="delete" id={item.id} />
@@ -134,19 +141,27 @@ const StudentListPage = async ({searchParams}: {searchParams: {[key:string]: str
     <div className="mt-20 bg-white p-4 rounded-md flex-1 m-4">
       {/* Top */}
       <div className="flex items-center justify-between">
-        <h1 className="hidden md:block text-lg font-semibold">All Students</h1>
+        <h1 className="text-lg font-semibold mb-4 md:mb-0">All Students</h1>
 
-        <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
-            <TableSearch />
+        <div className="flex sm:items-center sm:justify-between">
+            <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                <SelectDropdown 
+                label="Class" 
+                param="classId" 
+                options={classes} 
+                />
+                
+                <TableSearch/>
+            </div>
 
             <div className="flex items-center gap-4 self-end">
-                <button className="w-8 h-8 flex items-center justify-center rounded-full bg-Yellow">
+                {/* <button className="w-8 h-8 flex items-center justify-center rounded-full bg-Yellow">
                     <Image src='/filter.png' alt='' width={14} height={14} />
                 </button>
 
                 <button className="w-8 h-8 flex items-center justify-center rounded-full bg-Yellow">
                     <Image src='/sort.png' alt='' width={14} height={14} />
-                </button>
+                </button> */}
                 
                 {role === 'admin' && ( 
                     <button className="w-8 h-8 flex items-center justify-center rounded-full bg-Yellow">

@@ -140,8 +140,8 @@ const FormModal = ({
     type === "create"
       ? "bg-Yellow"
       : type === "update"
-      ? "bg-blue-500"
-      : "bg-Purple hover:bg-blue-500";
+      ? "bg-blue-500 hover:bg-blue-700"
+      : "bg-red-100 hover:bg-red-400";
 
   const [open, setOpen] = useState(false);
 

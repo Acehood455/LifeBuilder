@@ -15,7 +15,7 @@ const UserCard = async ({type}: {type: 'admin' | 'teacher' | 'student' | 'parent
   
   
   return (
-  <div className="rounded-2xl odd:bg-Purple even:bg-Yellow p-4 flex-1 min-w-[130px]">
+  <div className="rounded-2xl odd:bg-[#99ccff] even:bg-[#ffffcc] p-4 flex-1 min-w-[130px]">
     <div className="flex justify-between items-center">
         <span className="text-[10px] bg-white px-2 py-1 rounded-full text-green-600 ">
             2024/25

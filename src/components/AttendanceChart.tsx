@@ -16,8 +16,8 @@ const AttendanceChart = ({data}: {data: {name:string, present:number, absent:num
           <YAxis axisLine={false} tick={{fill:'#d1d5db'}} tickLine={false}/>
           <Tooltip contentStyle={{ borderRadius: '10px', borderColor: 'lightgray' }} />
           <Legend align='left' verticalAlign='top' wrapperStyle={{ paddingTop: '20px', paddingBottom: '40px' }} />
-          <Bar dataKey="present" fill="#c3ebfa"  legendType='circle' radius={[10, 10, 0, 0]} />
-          <Bar dataKey="absent" fill="#fae27c" legendType='circle' radius={[10, 10, 0, 0]} />
+          <Bar dataKey="present" fill="#009933"  legendType='circle' radius={[10, 10, 0, 0]} />
+          <Bar dataKey="absent" fill="#ff0066" legendType='circle' radius={[10, 10, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     );
