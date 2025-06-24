@@ -8,7 +8,7 @@ const CountChart = ({boys, girls}: {boys:number, girls:number}) => {
     {
       name: 'Total',
       count: boys + girls,
-      fill: 'white',
+      fill: '#e6f2ff',
     },
     {
       name: 'Girls',

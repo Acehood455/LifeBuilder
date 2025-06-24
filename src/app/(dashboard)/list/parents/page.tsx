@@ -80,8 +80,8 @@ const ParentsListPage = async ({searchParams}: {searchParams: {[key:string]: str
     ]
     
     const renderRow = (item:ParentList) =>(
-        <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-PurpleLight ">
-            <td className="flex items-center gap-4 p-4">
+        <tr key={item.id} className="border-b border-gray-200 even:bg-[#dce8f5] text-sm hover:bg-[#b3d7ff] ">
+            <td className="flex items-center gap-2 p-2">
                 <div className="flex flex-col">
                     <h3 className='font-semibold'>{item.name + ' ' + item.surnName}</h3>
                     <h3 className='text-xs text-gray-500'>{item?.phone}</h3>
@@ -107,7 +107,7 @@ const ParentsListPage = async ({searchParams}: {searchParams: {[key:string]: str
     
     
   return (
-    <div className="mt-20 bg-white p-4 rounded-md flex-1 m-4">
+    <div className="mt-20 bg-[#e6f2ff] p-4 rounded-md flex-1 m-4">
       {/* Top */}
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-semibold mb-4 md:mb-0">All Parents</h1>

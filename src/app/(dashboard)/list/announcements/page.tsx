@@ -85,7 +85,7 @@ const AnnouncementListPage = async ({searchParams}: {searchParams: {[key:string]
     ]
 
     const renderRow = (item:AnnouncementList) => (
-        <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-PurpleLight ">
+        <tr key={item.id} className="border-b border-gray-200 even:bg-[#dce8f5] text-sm hover:bg-[#b3d7ff] ">
             <td className="flex items-center gap-4 p-4">
                 {item.title}
             </td>
@@ -113,7 +113,7 @@ const AnnouncementListPage = async ({searchParams}: {searchParams: {[key:string]
     
 
   return (
-    <div className="mt-20 bg-white p-4 rounded-md flex-1 m-4">
+    <div className="mt-20 bg-[#e6f2ff] p-4 rounded-md flex-1 m-4">
       {/* Top */}
       <div className="flex items-center justify-between">
         <h1 className="hidden md:block text-lg font-semibold">Announcements</h1>

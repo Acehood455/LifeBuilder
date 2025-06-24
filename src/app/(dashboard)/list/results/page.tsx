@@ -92,7 +92,7 @@ const ResultsPage = async ({
   ]);
 
   return (
-    <div className="mt-20 bg-white p-4 rounded-md flex-1 m-4">
+    <div className="mt-20 bg-[#e6f2ff] p-4 rounded-md flex-1 m-4">
       {(role === "admin" || role === "teacher") && (
         <div className="flex flex-wrap items-center gap-4 mb-4">
           <SelectDropdown label="Term" param="termId" options={terms} />
@@ -112,14 +112,14 @@ const ResultsPage = async ({
         render={(student) => (
           <tr
             key={student.id}
-            className="border-b text-sm even:bg-slate-50 hover:bg-slate-100"
+            className="border-b even:bg-[#dce8f5] text-sm hover:bg-[#b3d7ff]"
           >
             <td>{student.name} {student.surnName}</td>
             <td>{student.class?.name}</td>
             <td>
               <Link
                 href={`/list/results/${student.id}${termId ? `?termId=${termId}` : ""}`}
-                className="flex items-center justify-center rounded-full w-7 h-7 bg-Sky text-white hover:Sky"
+                className="flex items-center justify-center rounded-full w-7 h-7 bg-blue-400 hover:bg-blue-600 text-[#e6f2ff]"
                 title="View Result"
               >
                 <Image src="/view.png" alt="View" width={16} height={16} />

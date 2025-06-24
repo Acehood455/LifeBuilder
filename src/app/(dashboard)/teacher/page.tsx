@@ -11,7 +11,7 @@ const TeacherPage = async () => {
   <div className="p-4 flex flex-1 gap-4 flex-col xl:flex-row mt-20">
     {/* Left */}
     <div className="w-full xl-2/3">
-      <div className="h-full bg-white p-4 rounded-md">
+      <div className="h-full bg-[#e6f2ff] p-4 rounded-md">
         <h1 className="text-xl font-semibold">Schedule</h1>
         
         <BigCalenderContainer type="teacherId" id={userId!} />

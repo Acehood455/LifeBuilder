@@ -100,8 +100,8 @@ const StudentListPage = async ({searchParams}: {searchParams: {[key:string]: str
     ]
     
     const renderRow = (item:StudentList) =>(
-        <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-PurpleLight ">
-            <td className="flex items-center gap-4 p-4">
+        <tr key={item.id} className="border-b border-gray-200 even:bg-[#dce8f5] text-sm hover:bg-[#b3d7ff] ">
+            <td className="flex items-center gap-2 p-2">
                 <Image src={item.img || '/noAvatar.png'} 
                        alt='' width={40} 
                        height={40} 
@@ -122,7 +122,7 @@ const StudentListPage = async ({searchParams}: {searchParams: {[key:string]: str
                 <div className="flex items-center gap-2">
                     {(role === 'admin' || role === 'teacher') && ( 
                         <Link href={`/list/students/${item.id}`}>
-                            <button className="w-7 h-7 flex items-center justify-center rounded-full bg-Sky">
+                            <button className="w-7 h-7 flex items-center justify-center rounded-full bg-blue-400 hover:bg-blue-600">
                                 <Image src='/view.png' alt='' width={16} height={16} />
                             </button>
                         </Link>
@@ -138,7 +138,7 @@ const StudentListPage = async ({searchParams}: {searchParams: {[key:string]: str
     
 
   return (
-    <div className="mt-20 bg-white p-4 rounded-md flex-1 m-4">
+    <div className="mt-20 bg-[#e6f2ff] p-4 rounded-md flex-1 m-4">
       {/* Top */}
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-semibold mb-4 md:mb-0">All Students</h1>

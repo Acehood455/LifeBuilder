@@ -55,7 +55,7 @@ const AssessmentListPage = async ({ searchParams }: { searchParams: { [key: stri
   ];
 
   return (
-    <div className="mt-20 bg-white p-4 rounded-md flex-1 m-4">
+    <div className="mt-20 bg-[#e6f2ff] p-4 rounded-md flex-1 m-4">
       <div className="flex flex-wrap items-center gap-4 mb-4">
         <SelectDropdown label="Subject" param="subjectId" options={subjects} />
         <SelectDropdown label="Term" param="termId" options={terms} />
@@ -73,9 +73,9 @@ const AssessmentListPage = async ({ searchParams }: { searchParams: { [key: stri
         columns={columns}
         data={assessments}
         render={(item) => (
-          <tr key={item.id} className="border-b text-sm even:bg-slate-50 hover:bg-slate-100">
+          <tr key={item.id} className="border-b even:bg-[#dce8f5] text-sm hover:bg-[#b3d7ff]">
             <td className="hidden md:table-cell">{item.title}</td>
-            <td>{item.class.name}</td>
+            <td className="gap-2 p-2">{item.class.name}</td>
             <td>{item.subject.name}</td>
             <td>{item.type}</td>
             <td className="hidden md:table-cell">{item.weight}%</td>
