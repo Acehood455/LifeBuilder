@@ -1,9 +1,11 @@
 import Announcements from "@/components/Announcements";
 import BigCalenderContainer from "@/components/BigCalenderContainer";
+import EventCalenderContainer from "@/components/EventCalenderContainer";
 import { auth } from "@clerk/nextjs/server";
 // import EventCalender from "@/components/EventCalender";
 
-const TeacherPage = async () => {
+const TeacherPage = async ({searchParams}: 
+  {searchParams: {[keys:string]: string | undefined}}) => {
 
   const {userId} = await auth()
   
@@ -21,6 +23,7 @@ const TeacherPage = async () => {
     {/* Right */}
     <div className="w-full xl:w-1/3 flex flex-col gap-8">
       {/* <EventCalender /> */}
+      <EventCalenderContainer searchParams={searchParams} />
       <Announcements />
     </div>
   </div>
