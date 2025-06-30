@@ -92,7 +92,7 @@ const ClassesListPage = async ({searchParams}: {searchParams: {[key:string]: str
                 </td>
     
                 <td className="hidden md:table-cell">
-                    {item.supervisor ? `${item.supervisor.name} ${item.supervisor.surnName}` : 'No supervisor'}
+                    {item.supervisor ? `${item.supervisor.name} ${item.supervisor.surnName}` : 'None'}
                 </td>
     
                 <td className="hidden md:table-cell">
