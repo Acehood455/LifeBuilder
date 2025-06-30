@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Class, Grade, Prisma, Teacher } from "../../../../../generated/prisma";
 import { getUserRole } from "@/lib/utils";
 
-type ClassList = Class & {supervisor: Teacher, grade: Grade}
+type ClassList = Class & {supervisor: Teacher | null, grade: Grade}
 
 
 const ClassesListPage = async ({searchParams}: {searchParams: {[key:string]: string | undefined} }) => {
@@ -92,7 +92,7 @@ const ClassesListPage = async ({searchParams}: {searchParams: {[key:string]: str
                 </td>
     
                 <td className="hidden md:table-cell">
-                    {item.supervisor.name + ' ' + item.supervisor.surnName}
+                    {item.supervisor ? `${item.supervisor.name} ${item.supervisor.surnName}` : 'No supervisor'}
                 </td>
     
                 <td className="hidden md:table-cell">

@@ -87,15 +87,24 @@ export const createClass = async (
   data: ClassSchema
 ) => {
   try {
+    // Clean the data before creation
+    const createData = {
+      ...data,
+      supervisorId: data.supervisorId || undefined // Converts ""/null to undefined
+    };
+
     await prisma.class.create({
-      data,
+      data: createData,
     });
 
-    // revalidatePath("/list/class");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
-    return { success: false, error: true };
+    console.error("Create class error:", err);
+    return { 
+      success: false, 
+      error: true,
+      message: err instanceof Error ? err.message : "Failed to create class"
+    };
   }
 };
 
@@ -104,18 +113,25 @@ export const updateClass = async (
   data: ClassSchema
 ) => {
   try {
+    // Clean the data before update
+    const updateData = {
+      ...data,
+      supervisorId: data.supervisorId || undefined // Converts ""/null to undefined
+    };
+
     await prisma.class.update({
-      where: {
-        id: data.id,
-      },
-      data,
+      where: { id: data.id },
+      data: updateData,
     });
 
-    // revalidatePath("/list/class");
     return { success: true, error: false };
   } catch (err) {
-    console.log(err);
-    return { success: false, error: true };
+    console.error("Update class error:", err);
+    return { 
+      success: false, 
+      error: true,
+      message: err instanceof Error ? err.message : "Failed to update class"
+    };
   }
 };
 
