@@ -64,15 +64,15 @@ const TeacherListPage = async ({searchParams}: {searchParams: {[key:string]: str
             header: 'Info', 
             accessor:'info',
         },
-        {
-            header: 'Teacher ID', 
-            accessor:'teacherId', 
-            className: 'hidden md:table-cell',
-        },
+        // {
+        //     header: 'Teacher Username', 
+        //     accessor:'teacherId', 
+        //     className: 'hidden md:table-cell',
+        // },
         {
             header: 'Subjects', 
             accessor:'subjects', 
-            className: 'hidden md:table-cell',
+            // className: 'hidden md:table-cell',
         },
         {
             header: 'Classes', 
@@ -104,13 +104,13 @@ const TeacherListPage = async ({searchParams}: {searchParams: {[key:string]: str
                        className="md:hidden xl:block w-10 h-10 rounded-full object-cover " 
                 />
                 <div className="flex flex-col">
-                    <h3 className='font-semibold'>{item.name}</h3>
+                    <h3 className='font-semibold'>{item.name + ' ' + item.surnName}</h3>
                     <h3 className='text-xs text-gray-500'>{item?.phone}</h3>
                 </div>
             </td>
     
-            <td className="hidden md:table-cell">{item.username}</td>
-            <td className="hidden md:table-cell">{item.subjects.map(subject => subject.name).join(', ')}</td>
+            {/* <td className="hidden md:table-cell">{item.username}</td> */}
+            <td className="">{item.subjects.map(subject => subject.name).join(', ')}</td>
             <td className="hidden md:table-cell">{item.classes.map(className => className.name).join(', ')}</td>
             <td className="hidden md:table-cell">{item?.email}</td>
             <td className="hidden md:table-cell">{item.address}</td>
