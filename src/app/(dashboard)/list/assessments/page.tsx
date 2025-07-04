@@ -49,6 +49,7 @@ const AssessmentListPage = async ({ searchParams }: { searchParams: { [key: stri
     { header: "Title", accessor: "title", className: 'hidden md:table-cell', },
     { header: "Class", accessor: "class" },
     { header: "Subject", accessor: "subject" },
+    { header: "Term", accessor: "term" },
     { header: "Type", accessor: "type" },
     { header: "Percent", accessor: "weight", className: 'hidden md:table-cell', },
     { header: "Actions", accessor: "actions" },
@@ -77,6 +78,7 @@ const AssessmentListPage = async ({ searchParams }: { searchParams: { [key: stri
             <td className="hidden md:table-cell">{item.title}</td>
             <td className="gap-2 p-2">{item.class.name}</td>
             <td>{item.subject.name}</td>
+            <td>{item.term.name}</td>
             <td>{item.type}</td>
             <td className="hidden md:table-cell">{item.weight}%</td>
             <td>
