@@ -8,6 +8,10 @@ import {
   SubjectSchema,
   TeacherSchema,
   AssessmentSchema,
+  AnnouncementSchema,
+  announcementSchema,
+  EventSchema,
+  eventSchema,
 } from "./formValidationSchemas";
 import prisma from "./prisma";
 import { auth, clerkClient } from "@clerk/nextjs/server";
@@ -655,8 +659,6 @@ export const createAssessment = async (
   }
 };
 
-
-
 export const updateAssessment = async (
   _: CurrentState,
   data: AssessmentSchema
@@ -711,3 +713,145 @@ export const deleteAssessment = async (_: CurrentState, data: FormData) => {
   }
 };
 
+
+
+
+export const createAnnouncement = async (
+  _: CurrentState,
+  data: AnnouncementSchema
+) => {
+  try {
+    const { id, ...rest } = data;
+
+    console.log("Creating announcement with:", rest);
+
+    await prisma.announcement.create({
+      data: {
+        title: rest.title,
+        description: rest.description || null,
+        date: new Date(rest.date), // Convert string to Date
+        classId: rest.classId || null,
+      },
+    });
+
+    return { success: true, error: false };
+  } catch (err) {
+    console.error("Error creating announcement:", err);
+    return { success: false, error: true };
+  }
+};
+
+export const updateAnnouncement = async (
+  _: CurrentState,
+  data: AnnouncementSchema
+) => {
+  try {
+    await prisma.announcement.update({
+      where: { id: data.id },
+      data: {
+        title: data.title,
+        description: data.description || null,
+        date: new Date(data.date), // Convert string to Date
+        classId: data.classId || null,
+      },
+    });
+
+    return { success: true, error: false };
+  } catch (err) {
+    console.error("Error updating announcement:", err);
+    return { success: false, error: true };
+  }
+};
+
+export const deleteAnnouncement = async (_: CurrentState, data: FormData) => {
+  const idStr = data.get("id");
+  const id = Number(idStr);
+
+  if (!idStr || isNaN(id)) {
+    console.error("Invalid ID:", idStr);
+    return { success: false, error: true };
+  }
+
+  try {
+    await prisma.announcement.delete({
+      where: { id },
+    });
+
+    return { success: true, error: false };
+  } catch (err) {
+    console.error("Error deleting announcement:", err);
+    return { success: false, error: true };
+  }
+};
+
+
+
+export const createEvent = async (
+  _: CurrentState,
+  data: EventSchema
+) => {
+  try {
+    const { id, ...rest } = data;
+
+    console.log("Creating event with:", rest);
+
+    await prisma.event.create({
+      data: {
+        title: rest.title,
+        description: rest.description || null,
+        startTime: new Date(rest.startTime), // Convert string to Date
+        endTime: new Date(rest.endTime),     // Convert string to Date
+        classId: rest.classId || null,
+      },
+    });
+
+    return { success: true, error: false };
+  } catch (err) {
+    console.error("Error creating event:", err);
+    return { success: false, error: true };
+  }
+};
+
+export const updateEvent = async (
+  _: CurrentState,
+  data: EventSchema
+) => {
+  try {
+    await prisma.event.update({
+      where: { id: data.id },
+      data: {
+        title: data.title,
+        description: data.description || null,
+        startTime: new Date(data.startTime), // Convert string to Date
+        endTime: new Date(data.endTime),     // Convert string to Date
+        classId: data.classId || null,
+      },
+    });
+
+    return { success: true, error: false };
+  } catch (err) {
+    console.error("Error updating event:", err);
+    return { success: false, error: true };
+  }
+};
+
+export const deleteEvent = async (_: CurrentState, data: FormData) => {
+  const idStr = data.get("id");
+  const id = Number(idStr);
+
+  if (!idStr || isNaN(id)) {
+    console.error("Invalid ID:", idStr);
+    return { success: false, error: true };
+  }
+
+  try {
+    await prisma.event.delete({
+      where: { id },
+    });
+
+    return { success: true, error: false };
+  } catch (err) {
+    console.error("Error deleting event:", err);
+    return { success: false, error: true };
+  }
+};

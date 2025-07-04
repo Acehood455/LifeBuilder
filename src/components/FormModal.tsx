@@ -8,6 +8,8 @@ import {
   deleteSubject,
   deleteTeacher,
   deleteAssessment,
+  deleteAnnouncement,
+  deleteEvent,
 } from "@/lib/actions";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -29,8 +31,8 @@ const deleteActionMap = {
   assessment: deleteAssessment,
   result: deleteSubject,
   attendance: deleteSubject,
-  event: deleteSubject,
-  announcement: deleteSubject,
+  event: deleteEvent,
+  announcement: deleteAnnouncement,
 };
 
 //LAZY LOADING
@@ -54,6 +56,12 @@ const ParentForm = dynamic(() => import("./forms/ParentForm"), {
 });
 // TODO: OTHER FORMS
 const AssessmentForm = dynamic(() => import("./forms/AssessmentForm"), {
+  loading: () => <h1>Loading...</h1>,
+});
+const AnnouncementForm = dynamic(() => import("./forms/AnnouncementForm"), {
+  loading: () => <h1>Loading...</h1>,
+});
+const EventForm = dynamic(() => import("./forms/EventForm"), {
   loading: () => <h1>Loading...</h1>,
 });
 
@@ -120,6 +128,24 @@ const forms: {
 
   assessment: (setOpen, type, data, relatedData) => (
   <AssessmentForm
+    type={type}
+    setOpen={setOpen}
+    data={data}
+    relatedData={relatedData}
+  />
+  ),
+  
+  announcement: (setOpen, type, data, relatedData) => (
+  <AnnouncementForm
+    type={type}
+    setOpen={setOpen}
+    data={data}
+    relatedData={relatedData}
+  />
+  ),
+  
+  event: (setOpen, type, data, relatedData) => (
+  <EventForm
     type={type}
     setOpen={setOpen}
     data={data}

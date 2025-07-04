@@ -138,3 +138,47 @@ export const assessmentSchema = z.object({
 });
 
 export type AssessmentSchema = z.infer<typeof assessmentSchema>;
+
+
+export const announcementSchema = z.object({
+  id: z.coerce.number().optional(),
+  title: z.string().min(1, { message: "Title is required!" }),
+  description: z.string().optional(),
+  date: z.coerce.date({ 
+    required_error: "Date is required!",
+    invalid_type_error: "Invalid date format!" 
+  }),
+  classId: z.coerce.number()
+    .min(1, { message: "Class is required!" })
+    .optional()
+    .nullable()
+    .transform(val => val === null ? undefined : val),
+});
+
+export type AnnouncementSchema = z.infer<typeof announcementSchema>;
+
+
+
+export const eventSchema = z.object({
+  id: z.coerce.number().optional(),
+  title: z.string()
+    .min(3, { message: "Title must be at least 3 characters" })
+    .max(100, { message: "Title can't exceed 100 characters" }),
+  description: z.string()
+    .max(500, { message: "Description can't exceed 500 characters" })
+    .optional(),
+  startTime: z.coerce.date({
+    required_error: "Start time is required",
+    invalid_type_error: "Invalid date format",
+  }),
+  endTime: z.coerce.date({
+    required_error: "End time is required",
+    invalid_type_error: "Invalid date format",
+  }),
+  classId: z.union([
+    z.number().int().positive(),
+    z.string().transform(val => val === "" ? null : Number(val))
+  ]).nullable().optional(),
+});
+
+export type EventSchema = z.infer<typeof eventSchema>;

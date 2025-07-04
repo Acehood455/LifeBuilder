@@ -1,185 +1,163 @@
-import FormModal from "@/components/FormModal";
+import FormContainer from "@/components/FormContainer";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 import prisma from "@/lib/prisma";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 import Image from "next/image";
-import { Class, Event, Prisma } from "../../../../../generated/prisma";
 import { getUserRole } from "@/lib/utils";
-
-type EventList = Event & { class: Class }
-
+import { Prisma } from "../../../../../generated/prisma";
 
 const EventListPage = async ({searchParams}: {searchParams: {[key:string]: string | undefined} }) => {
     const {userId, role} = await getUserRole();
 
-
-    const {page, ...queryParams} = searchParams;
+    const {page, search} = searchParams;
     const p = page ? parseInt(page) : 1;
 
-    // Url Params Conditions
-    const query : Prisma.EventWhereInput = {}
+    // Base query conditions
+    const query: Prisma.EventWhereInput = {};
     
-    if (queryParams) {
-        for (const [key, value] of Object.entries(queryParams)) {
-            if (value !== undefined){
-                switch (key) {
-                    case 'search':
-                        query.title = 
-                            {contains: value, mode: 'insensitive'};
-                        break;
-                    default:
-                        break;
-                 
-                }
-            }
-        }
+    // Search condition
+    if (search) {
+        query.title = { contains: search, mode: 'insensitive' };
     }
 
-    // Role Conditions
-
-    // switch (role) {
-    //     case 'admin':
-    //         break;
-    //     case 'teacher':
-    //         query.OR = [
-    //             { classId: null }, 
-    //             { class: {lessons: { some: { teacherId: userId! } }} }
-    //         ];
-    //     default:
-    //         break;
-    // }
-    const roleCoditions = {
-        teacher: { lessons: { some: { teacherId: userId! } } },
-        student: { students: { some: { id: userId! } } },
-        parent: { students: { some: { parentId: userId! } } },
+    // Role-based conditions
+    if (role !== 'admin') {
+        query.OR = [
+            { classId: null }, // Show events not assigned to any class
+            // Show events assigned to classes the user has access to
+            ...(role === 'teacher' ? [
+                { class: { supervisorId: userId } }
+            ] : []),
+            ...(role === 'student' ? [
+                { class: { students: { some: { id: userId } } } }
+            ] : []),
+            ...(role === 'parent' ? [
+                { class: { students: { some: { parentId: userId } } } }
+            ] : [])
+        ];
     }
-    query.OR = [
-        { classId: null }, 
-        { class: roleCoditions[role as keyof typeof roleCoditions] || {}}
-    ];
-    
+
     const [data, count] = await prisma.$transaction([
         prisma.event.findMany({
             where: query,
             include: {
-                class: true,
+                class: {
+                    select: {
+                        id: true,
+                        name: true
+                    }
+                },
+            },
+            orderBy: {
+                startTime: 'desc' // Show most recent events first
             },
             take: ITEM_PER_PAGE,
             skip: ITEM_PER_PAGE * (p - 1),
         }),
-        prisma.event.count({where: query})
-    ])
-
-    // console.log(count);
-
+        prisma.event.count({ where: query })
+    ]);
 
     const columns = [
-        {
-            header: 'Title', 
-            accessor:'title',
-        },
-        {
-            header: 'Class', 
-            accessor:'class', 
-        },
-        {
-            header: 'Date', 
-            accessor:'date', 
-            className: 'hidden md:table-cell',
-        },
-        {
-            header: 'Start Time', 
-            accessor:'startTime', 
-            className: 'hidden md:table-cell',
-        },
-        {
-            header: 'End Time', 
-            accessor:'endTime', 
-            className: 'hidden md:table-cell',
-        },
-        ...(role === 'admin' ? [{
-            header: 'Actions', 
-            accessor:'action', 
-        }] : []),
-    ]
+    {
+        header: 'Title', 
+        accessor: 'title',
+        className: 'min-w-[150px]' // Set minimum width
+    },
+    {
+        header: 'Class', 
+        accessor: 'class',
+        className: 'min-w-[100px]',
+        render: (classInfo: { name: string } | null) => classInfo?.name || '-'
+    },
+    {
+        header: 'Date',  
+        accessor: 'startTime',
+        className: '',
+        render: (date: Date) => (
+            <div className="flex flex-col">
+                <span>{new Intl.DateTimeFormat('en-US').format(date)}</span>
+                <span className="text-xs text-gray-500">
+                    {date.toLocaleTimeString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    })}
+                    {' - '}
+                    {new Date(date.getTime() + 60*60*1000).toLocaleTimeString('en-US', { // Example: +1 hour
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    })}
+                </span>
+            </div>
+        )
+    },
+    ...(role === 'admin' ? [{
+        header: 'Actions', 
+        accessor: 'action',
+        className: 'min-w-[100px]'
+    }] : []),
+];
     
-    const renderRow = (item:EventList) =>(
-        <tr key={item.id} className="border-b border-gray-200 even:bg-[#dce8f5] text-sm hover:bg-[#b3d7ff] ">
-            <td className="flex items-center gap-2 p-2">
-                {item.title}
-            </td>
-    
-            <td>
-                {item.class?.name || '-'}
-            </td>
-    
-            <td className="hidden md:table-cell">
-                {new Intl.DateTimeFormat('en-US').format(item.startTime)}
-            </td>
-    
-            <td className="hidden md:table-cell">
-                {item.startTime.toLocaleTimeString('en-US', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false,
-                })}
-            </td>
-    
-            <td className="hidden md:table-cell">
-                {item.endTime.toLocaleTimeString('en-US', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false,
-                })}
-            </td>
-    
-            <td className="">
+    const renderRow = (item: any) => (
+    <tr key={item.id} className="border-b border-gray-200 even:bg-[#dce8f5] text-sm hover:bg-[#b3d7ff]">
+        <td className="p-2">
+            {item.title}
+        </td>
+        <td className="p-2">
+            {item.class?.name || 'All Classes'}
+        </td>
+        <td className="">
+            <div className="flex flex-col">
+                <span>{new Intl.DateTimeFormat('en-US').format(item.startTime)}</span>
+                <span className="text-xs text-gray-500">
+                    {item.startTime.toLocaleTimeString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    })}
+                    {' - '}
+                    {item.endTime.toLocaleTimeString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    })}
+                </span>
+            </div>
+        </td>
+        {role === 'admin' && (
+            <td className="p-2">
                 <div className="flex items-center gap-2">
-                    {role === 'admin' && ( 
-                    <>
-                        <FormModal table="event" type="update" data={item} />
-                        <FormModal table="event" type="delete" id={item.id} />
-                    </>
-                    )}
+                    <FormContainer table="event" type="update" data={item} />
+                    <FormContainer table="event" type="delete" id={item.id} />
                 </div>
             </td>
-        </tr>
-    ); 
+        )}
+    </tr>
+);
 
-    
-  return (
-    <div className="mt-20 bg-[#e6f2ff] p-4 rounded-md flex-1 m-4">
-      {/* Top */}
-      <div className="flex items-center justify-between">
-        <h1 className="hidden md:block text-lg font-semibold">Events</h1>
-
-        <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
-            <TableSearch />
-
-            <div className="flex items-center gap-4 self-end">
-                <button className="w-8 h-8 flex items-center justify-center rounded-full bg-Yellow">
-                    <Image src='/filter.png' alt='' width={14} height={14} />
-                </button>
-                <button className="w-8 h-8 flex items-center justify-center rounded-full bg-Yellow">
-                    <Image src='/sort.png' alt='' width={14} height={14} />
-                </button>
-                {role === 'admin' && ( 
-                    <button className="w-8 h-8 flex items-center justify-center rounded-full bg-Yellow">
-                        <FormModal table="event" type="create" />
-                    </button>
-                )}
+    return (
+        <div className="mt-20 bg-[#e6f2ff] p-4 rounded-md flex-1 m-4">
+            <div className="flex items-center justify-between">
+                <h1 className="md:block text-lg font-semibold">Events</h1>
+                <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+                    <TableSearch />
+                    <div className="flex items-center gap-4 self-end">
+                        
+                        {role === 'admin' && ( 
+                            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-Yellow">
+                                <FormContainer table="event" type="create" />
+                            </button>
+                        )}
+                    </div>
+                </div>
             </div>
+            
+            <Table columns={columns} render={renderRow} data={data} />
+            <Pagination page={p} count={count} />
         </div>
-      </div>
-        
-      {/* List */}
-      <Table columns={columns} render={renderRow} data={data} />
-
-      {/* Pagination */}
-      <Pagination page={p} count={count} />
-    </div>
     );
 };
 
