@@ -42,7 +42,8 @@ const StudentInfo: React.FC<{ student: StudentInfoProps["student"] }> = ({ stude
             <td className="bg-[#d9d9d9] font-semibold border-2 border-black p-1">Class</td>
             <td className="font-semibold border-2 border-black p-1">{student.className}</td>
             <td className="bg-[#d9d9d9] font-semibold border-2 border-black p-1">Term</td>
-            <td className="font-semibold border-2 border-black p-1">{student.term}</td>
+            {/* <td className="font-semibold border-2 border-black p-1">{student.term}</td> */}
+            <td className="font-semibold border-2 border-black p-1">Third Term</td>
           </tr>
           <tr className="border-b border-black">
             {/* <td className="bg-[#d9d9d9] font-semibold border-2 border-black p-1">State</td>
@@ -50,7 +51,8 @@ const StudentInfo: React.FC<{ student: StudentInfoProps["student"] }> = ({ stude
             <td className="bg-[#d9d9d9] font-semibold border-2 border-black p-1">L.G.A</td>
             <td className="bg-[#d9d9d9] font-semibold border-2 border-black p-1">{student.lga}</td> */}
             <td className="bg-[#d9d9d9] font-semibold border-2 border-black p-1">Gender</td>
-            <td className="font-semibold border-2 border-black p-1">{student.gender}</td>
+            {/* <td className="font-semibold border-2 border-black p-1">{student.gender}</td> */}
+            <td className="font-semibold border-2 border-black p-1">{student.gender.charAt(0).toUpperCase() + student.gender.slice(1).toLowerCase()}</td>
             <td className="bg-[#d9d9d9] font-semibold border-2 border-black p-1">Session</td>
             <td className="font-semibold border-2 border-black p-1">{student.session}</td>
           </tr>

@@ -27,8 +27,8 @@ export const routeAccessMap : RouteAccessMap = {
 
 export const appConfig = {
   currentYear: "2024/2025",
-  currentTerm: "Third Term", // First Term | Second Term | Third Term
-  currentTermId : 3, // 1 | 2 | 3
-  showFullYearResults: true, // true | false
-  newTermBegins: "2024-08-01",
+  currentTerm: "First Term", // First Term | Second Term | Third Term
+  currentTermId : 1, // 1 | 2 | 3
+  showFullYearResults: false, // true | false
+  newTermBegins: "08/09/2025",
 };
