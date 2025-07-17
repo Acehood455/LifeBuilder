@@ -75,7 +75,7 @@ export default function ResultPageClient({ resultData }: { resultData: any }) {
           school={{
             name: "LIFEBUILDER CHRISTIAN HIGH SCHOOL",
             address: "No.1 Pole street Diye Mbe adjacent PHCN, off Rayfield/Zaramaganda road Jos,Plateau state",
-            phone: "07032319061",
+            phone: "07060495341",
             email: "info@lifebuilder.edu.ng",
             logoUrl: "/favicon.png",
           }}

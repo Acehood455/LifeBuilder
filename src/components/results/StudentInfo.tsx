@@ -74,9 +74,10 @@ const StudentInfo: React.FC<{ student: StudentInfoProps["student"] }> = ({ stude
           </tr>
           <tr>
             <td className="bg-[#d9d9d9] font-semibold border-2 border-black p-1">Average</td>
-            <td className="font-semibold border-2 border-black p-1">{student.average}</td>
+            <td className="font-semibold border-2 border-black p-1">{student.average}%</td>
             <td className="bg-[#d9d9d9] font-semibold border-2 border-black p-1">Aggregate Position</td>
-            <td className="font-semibold border-2 border-black p-1">{student.position}</td>
+            <td className="font-semibold border-2 border-black p-1"></td>
+            {/* <td className="font-semibold border-2 border-black p-1">{student.position}</td> */}
           </tr>
         </tbody>
       </table>
