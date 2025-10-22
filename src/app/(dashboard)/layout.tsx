@@ -19,7 +19,7 @@ export default function DashboardLayout({
       {/* Sidebar */}
       <div
         className={`
-          fixed top-0 left-0 h-full z-50 bg-[#b3d7ff] sm:bg-[#e6f2ff] p-4 shadow-md
+          fixed top-0 left-0 h-full z-50 bg-[#e6f2ff] p-4 shadow-md
           w-64 transform transition-transform duration-300
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
           md:relative md:translate-x-0 md:w-[16%] xl:w-[14%]
