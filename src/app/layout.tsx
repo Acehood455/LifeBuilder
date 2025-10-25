@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     siteName: "Lifebuilder Christian Academy",
     images: [
       {
-        url: "https://lifebuilderschools.com/lifebuilderLogo.png",
+        url: "https://lifebuilderschools.com/favicon.png",
         width: 2000,
         height: 1333,
         alt: "Lifebuilder Christian Academy Logo",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: "Lifebuilder Christian Academy",
     description:
       "Building faith, excellence, and purpose in every child — Lifebuilder Christian Academy.",
-    images: ["https://lifebuilderschools.com/lifebuilderLogo.png"],
+    images: ["https://lifebuilderschools.com/favicon.png"],
   },
 };
 
